@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Just another add</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="./main.js"></script>
+</head>
+
+<body>
+  <div class="add" id="add">
+    <h1></h1>
+  </div>
+</body>
+
+</html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    getLocation();
+  });
+  //position stuff
+  const x = document.getElementById("demo");
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+
+  function showPosition(position) {
+    const url = `https://api.tomtom.com/search/2/reverseGeocode/ ${position.coords.latitude},${position.coords.longitude}.json?key=4MAKRgV34urGA15sOxvIra7t1zKIG0MG&radius=100`
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          return response.json(); // Parse the JSON response
+        } else {
+          throw new Error(`Request failed with status: ${response.status}`);
+        }
+      })
+      .then(data => {
+        // Process the data as needed
+        let city = data['addresses'][0]['address']['municipality'];
+        let country = data['addresses'][0]['address']['country'];
+        console.log(data['addresses'][0]['address']);
+        document.getElementById("add").innerHTML = "Op zoek naar een Universiteit in " + city + "?";
+
+
+
+        //schoolstuff
+        let version = 1
+        let schoolurl = `https://hei.api.uni-foundation.eu/api/public/${version}/belgium`
+        fetch(schoolurl)
+          .then(response => {
+            if (response.ok) {
+              return response.json(); // Parse the JSON response
+            } else {
+              throw new Error(`Request failed with status: ${response.status}`);
+            }
+          })
+          .then(data => {
+            // Process the data as needed
+            console.log(data);
+          })
+          .catch(error => {
+            console.error(`Error: ${error.message}`);
+          });
+
+
+      })
+      .catch(error => {
+        console.error(`Error: ${error.message}`);
+      });
+
+
+    // x.innerHTML = "Latitude: " + position.coords.latitude +
+    //   "<br>Longitude: " + position.coords.longitude;
+  }
+</script>
