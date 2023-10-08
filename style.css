@@ -1,10 +1,35 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f1f1f1;
+}
 .add{
-    background-color: rgb(35, 30, 30); /* Green */
+    background-color: rgba(35, 30, 30, 0); /* Green */
     border: none;
     color: white;
-    padding: 300px 250px;
+    padding: 150px 150px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+#add{
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.addtext{
+    width: 300px;
+    height: 50px;
+}
+.addtext2{
+    width: 300px;
+    height: 50px;
+    padding-top: 50px;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+a:hover{
+    color: white;
+    text-decoration: underline;
 }
